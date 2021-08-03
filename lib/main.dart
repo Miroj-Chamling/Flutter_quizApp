@@ -24,11 +24,34 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _indexNumber = _indexNumber + 1;
     });
-    print(_indexNumber);
+    print('you pressed the button $_indexNumber times');
   }
 
   @override
-  var questions = ['what is your name?', 'where do you live?'];
+  var questions = [
+    /*here {} is used to make a map we can even use map() function to create 
+    a map but {} is a short way to create a map*/
+    /*
+    Dart Map is an object that stores data in the form of a key-value pair.
+    here, 'questionText' is the key value. 
+    */
+    {
+      'questionText': 'what is your favourite fruit?',
+      'answer': ['apple', 'banana', 'grape', 'mango'],
+    },
+    {
+      'questionText': 'what is your favourite sport?',
+      'answer': ['football', 'chess', 'basketball', 'cricket'],
+    },
+    {
+      'questionText': 'what is your favourite song?',
+      'answer': ['kutu ma kutu', 'night changes', 'yatri', 'simsime pani'],
+    },
+    {
+      'questionText': 'what is your favourite color?',
+      'answer': ['red', 'blue', 'green', 'pink'],
+    },
+  ];
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
@@ -37,7 +60,7 @@ class _MyAppState extends State<MyApp> {
             ),
             body: Column(
               children: [
-                Question(questions[_indexNumber]),
+                Question(questions[_indexNumber]['questionText'] as String),
                 Answer(_questionAnswer),
                 Answer(_questionAnswer),
                 Answer(_questionAnswer),
