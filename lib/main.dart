@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 import './question.dart';
@@ -54,18 +52,21 @@ class _MyAppState extends State<MyApp> {
   ];
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('My First App'),
-            ),
-            body: Column(
-              children: [
-                Question(questions[_indexNumber]['questionText'] as String),
-                Answer(_questionAnswer),
-                Answer(_questionAnswer),
-                Answer(_questionAnswer),
-                Answer(_questionAnswer),
-              ],
-            )));
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My First App'),
+        ),
+        body: Column(
+          children: [
+            Question(questions[_indexNumber]['questionText'] as String),
+            //... is a spread operator in dart and is used to prevent list looping.
+            ...(questions[_indexNumber]['answer'] as List<String>)
+                .map((answer) {
+              return Answer(_questionAnswer, answer);
+            }).toList()
+          ],
+        ),
+      ),
+    );
   }
 }
