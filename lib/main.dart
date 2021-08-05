@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import './question.dart';
@@ -16,17 +18,9 @@ class MyApp extends StatefulWidget {
 // accessable only from main.dart.
 
 class _MyAppState extends State<MyApp> {
-  var _indexNumber = 0;
-
-  void _questionAnswer() {
-    setState(() {
-      _indexNumber = _indexNumber + 1;
-    });
-    print('you pressed the button $_indexNumber times');
-  }
-
-  @override
-  var questions = [
+  //final is used for a value that is first inititalied and is changed during the run time;
+  //const is a value that wont be changed through out the run time.
+  final questions = const [
     /*here {} is used to make a map we can even use map() function to create 
     a map but {} is a short way to create a map*/
     /*
@@ -50,22 +44,44 @@ class _MyAppState extends State<MyApp> {
       'answer': ['red', 'blue', 'green', 'pink'],
     },
   ];
+  //var dummy = ['miroj'];
+  //dummy.add('Rai');
+  //Print(dummy);
+  var _indexNumber = 0;
+
+  void _questionAnswer() {
+    setState(() {
+      _indexNumber = _indexNumber + 1;
+    });
+    print('you pressed the button $_indexNumber times');
+    if (_indexNumber < questions.length) {
+      print('We have more questions.');
+    } else {
+      print('No more questions.');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          children: [
-            Question(questions[_indexNumber]['questionText'] as String),
-            //... is a spread operator in dart and is used to prevent list looping.
-            ...(questions[_indexNumber]['answer'] as List<String>)
-                .map((answer) {
-              return Answer(_questionAnswer, answer);
-            }).toList()
-          ],
-        ),
+        body: _indexNumber < questions.length
+            ? Column(
+                children: [
+                  Question(questions[_indexNumber]['questionText'] as String),
+                  //... is a spread operator in dart and is used to prevent list looping.
+                  ...(questions[_indexNumber]['answer'] as List<String>)
+                      .map((answer) {
+                    return Answer(_questionAnswer, answer);
+                  }).toList()
+                ],
+              )
+            : Center(
+                child: Text('You did it!'),
+              ),
       ),
     );
   }
