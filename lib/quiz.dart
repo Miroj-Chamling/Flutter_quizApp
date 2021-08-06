@@ -6,7 +6,7 @@ import './answer.dart';
 class quiz extends StatelessWidget {
   final List<Map<String, Object>> questions;
   final int indexNumber;
-  final VoidCallback questionAnswer;
+  final Function questionAnswer;
 
   quiz({
     required this.questions,
@@ -19,8 +19,10 @@ class quiz extends StatelessWidget {
       children: [
         Question(questions[indexNumber]['questionText'] as String),
         //... is a spread operator in dart and is used to prevent list looping.
-        ...(questions[indexNumber]['answer'] as List<String>).map((answer) {
-          return Answer(questionAnswer, answer);
+        ...(questions[indexNumber]['answers'] as List<Map<String, Object>>)
+            .map((answer) {
+          return Answer(
+              () => questionAnswer(answer['score']), answer['text'] as String);
         }).toList()
       ],
     );
