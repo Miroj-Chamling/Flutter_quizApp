@@ -22,7 +22,13 @@ class _MyAppState extends State<MyApp> {
   //final is used for a value that is first inititalied and is changed during the run time;
   //const is a value that wont be changed through out the run time.
   var _indexNumber = 0;
-  var _totalscore = 0;
+  var _totalScore = 0;
+  void _resetApp() {
+    setState(() {
+      _indexNumber = 0;
+      _totalScore = 0;
+    });
+  }
 
   final _questions = const [
     /*here {} is used to make a map we can even use map() function to create 
@@ -72,7 +78,7 @@ class _MyAppState extends State<MyApp> {
   //dummy.add('Rai');
   //Print(dummy);
   void _questionAnswer(int score) {
-    _totalscore += score;
+    _totalScore += score;
     setState(() {
       _indexNumber = _indexNumber + 1;
     });
@@ -88,16 +94,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('My First App'),
-          ),
-          body: _indexNumber < _questions.length
-              ? quiz(
-                  questionAnswer: _questionAnswer,
-                  indexNumber: _indexNumber,
-                  questions: _questions,
-                )
-              : result()),
+        appBar: AppBar(
+          title: Text('My First App'),
+        ),
+        body: _indexNumber < _questions.length
+            ? quiz(
+                questionAnswer: _questionAnswer,
+                indexNumber: _indexNumber,
+                questions: _questions,
+              )
+            : Result(_totalScore, _resetApp),
+      ),
     );
   }
 }
