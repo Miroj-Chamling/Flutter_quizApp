@@ -93,7 +93,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      //scaffold is a top level container for material.dart
+      home: Scaffold( 
         appBar: AppBar(
           title: Text('My First App'),
         ),
